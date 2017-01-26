@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="0dp"
+android:layout_weight="40"
+android:layout_height="match_parent">
+
+<ImageView
+    android:src="@drawable/face"
+    android:scaleType="fitXY"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></ImageView>
+<LinearLayout
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:background="#99111111"
+    android:layout_alignRight="@+id/btnCamera"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_alignTop="@+id/btnCamera"
+    />
+<ImageView
+    android:background="#ff2f202f"
+    android:id="@+id/btnCamera"
+    android:scaleType="fitXY"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:src="@drawable/camera"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="30dp"
+
+    />
+
+</RelativeLayout>
