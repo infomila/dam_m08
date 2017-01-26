@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#ff4433</color>
+    <color name="black">#000</color>
+    <color name="background_pressed">#ffaaaa</color>
+</resources>
