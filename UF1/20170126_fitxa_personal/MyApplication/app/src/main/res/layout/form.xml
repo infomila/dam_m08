@@ -7,12 +7,14 @@ android:padding="30dp"
 android:layout_height="match_parent"
 android:orientation="vertical">
 <EditText
+    android:id="@+id/edtNom"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
     android:hint="@string/activity_main_hint_nom"
     />
 <EditText
+    android:id="@+id/edtCognom"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"

@@ -6,6 +6,7 @@ android:layout_weight="40"
 android:layout_height="match_parent">
 
 <ImageView
+    android:id="@+id/imvCara"
     android:src="@drawable/face"
     android:scaleType="fitXY"
     android:layout_width="match_parent"
