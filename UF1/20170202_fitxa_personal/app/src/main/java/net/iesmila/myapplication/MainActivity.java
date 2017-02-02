@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,6 +42,8 @@ public class MainActivity extends Activity implements TextWatcher {
         mRdgSexe = (RadioGroup) findViewById(R.id.rdgSexe);
         mBtnOk = (Button) findViewById(R.id.btnOk);
 
+        carregaSpinner();
+
         valida();
         //-----------------------------------------------------
         mBtnCamera.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +62,18 @@ public class MainActivity extends Activity implements TextWatcher {
             }
         });
 
+    }
+
+    private void carregaSpinner() {
+
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.provincies, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        mSpnProvincia.setAdapter(adapter);
     }
 
     private void valida() {
