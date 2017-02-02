@@ -11,6 +11,7 @@ android:orientation="vertical">
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
+    android:inputType="text|textNoSuggestions"
     android:hint="@string/activity_main_hint_nom"
     />
 <EditText

@@ -3,6 +3,8 @@ package net.iesmila.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,14 +22,14 @@ import android.widget.Spinner;
 
 
 public class MainActivity extends Activity implements TextWatcher {
-    ImageView mImvCara;
-    ImageView mBtnCamera;
-    EditText mEdtNom;
-    EditText mEdtCognom;
-    Spinner mSpnProvincia;
-    RadioGroup mRdgSexe;
-    Button mBtnOk;
-
+    private ImageView mImvCara;
+    private ImageView mBtnCamera;
+    private EditText mEdtNom;
+    private EditText mEdtCognom;
+    private Spinner mSpnProvincia;
+    private RadioGroup mRdgSexe;
+    private Button mBtnOk;
+    private Drawable mEditTextDefaultBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class MainActivity extends Activity implements TextWatcher {
         mSpnProvincia = (Spinner) findViewById(R.id.spnProvincia);
         mRdgSexe = (RadioGroup) findViewById(R.id.rdgSexe);
         mBtnOk = (Button) findViewById(R.id.btnOk);
+
+        mEditTextDefaultBackground = mEdtNom.getBackground();
 
         carregaSpinner();
 
@@ -74,16 +79,42 @@ public class MainActivity extends Activity implements TextWatcher {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         mSpnProvincia.setAdapter(adapter);
+
+        mSpnProvincia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                valida();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                valida();
+            }
+        });
     }
 
     private void valida() {
 
-        boolean ok =    ( mEdtNom.getText().toString().trim().length()>1 ) &&
-                        ( mEdtCognom.getText().toString().trim().length()>1 ) &&
-                        ( mRdgSexe.getCheckedRadioButtonId()!=-1);// &&
-                        //( mSpnProvincia.getSelectedItemId()!=-1);
+        boolean ok =     validaEditTextObligatori(mEdtNom) &&
+                         validaEditTextObligatori(mEdtCognom) &&
+                         mRdgSexe.getCheckedRadioButtonId()!=-1  &&
+                         mSpnProvincia.getSelectedItemPosition()>0;
 
         mBtnOk.setEnabled(ok);
+    }
+
+
+
+    private boolean validaEditTextObligatori(EditText pEdt) {
+        boolean ok =  pEdt.getText().toString().trim().length()>1;
+
+        if(ok) {
+             //pEdt.setBackground(mEditTextDefaultBackground);
+            pEdt.setBackgroundResource(R.drawable.edit_text_back_ok);
+        } else {
+            pEdt.setBackgroundResource(R.drawable.edit_text_back_wrong);
+        }
+        return ok;
     }
 
 
