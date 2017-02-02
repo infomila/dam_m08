@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">FitxaPersonal</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="activity_main_hint_nom"><![CDATA[<Nom>]]></string>
+    <string name="activity_main_hint_cognom"><![CDATA[<Cognom>]]></string>
+    <string name="activity_main_home">Home</string>
+    <string name="activity_main_dona">Dona</string>
+    <string name="activity_main_other">Other</string>
+
+</resources>
