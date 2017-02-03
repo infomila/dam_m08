@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="provincies" >
+        <item> - </item>
+        <item>Barcelona</item>
+        <item>Lleida</item>
+        <item>Girona</item>
+        <item>Tarragona</item>
+    </string-array>
+</resources>
