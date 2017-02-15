@@ -23,7 +23,7 @@ public class AdapterPersones extends
 
 
     private ArrayList<Persona> mPersones;
-    private int mSelectedItem=-1;
+    
 
     public AdapterPersones(ArrayList<Persona> persones) {
         mPersones = persones;
@@ -43,38 +43,13 @@ public class AdapterPersones extends
     @Override
     public void onBindViewHolder(ViewHolder holder,final int position) {
         Persona p = mPersones.get(position);
-        holder.itemView.setSelected(position==mSelectedItem);
-
-        /*if(mSelectedItem == position){
-            // Here I am just highlighting the background
-            holder.itemView.setBackgroundColor(GREEN);
-        }else{
-            holder.itemView.setBackgroundColor(TRANSPARENT);
-        }*/
 
         holder.mEdtNom.setText(p.getNom());
         holder.mImvAvatar.setImageResource(p.getFaceResource());
         holder.mRtbRating.setRating(p.getRating());
-        holder.mImvAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int oldPosition = mSelectedItem;
-                mSelectedItem = position;
-                if(oldPosition!=-1) {
-                    notifyItemChanged(oldPosition);
-                }
-                notifyItemChanged(mSelectedItem);
 
-
-            }
-        });
     }
 
-    public void removeItem(int position) {
-        mPersones.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
-    }
 
     @Override
     public int getItemCount() {

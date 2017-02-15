@@ -36,26 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mRcyPersones.setHasFixedSize(true);
 
         //-------------- posem un separador de files ---------
-
-
-
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //Remove swiped item from list and notify the RecyclerView
-                mAdapterPersones.removeItem(viewHolder.getAdapterPosition());
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-
-        itemTouchHelper.attachToRecyclerView(mRcyPersones);
+        
 
     }
 }
