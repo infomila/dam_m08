@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import net.iesmila.a20170214_kamikaze_recyclerview.model.Persona;
@@ -23,11 +24,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Configurar toolbar
+        //=====================================================
+        //  CONFIGURACIÓ DE LA TOOLBAR
+        //
+        // http://www.hermosaprogramacion.com/2015/06/toolbar-en-android-creacion-de-action-bar-en-material-design/
+        //=====================================================
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tlbMenu);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Kamikaze");
+        //=====================================================
 
         mRcyPersones = (RecyclerView) findViewById(R.id.rcyPersones);
 
@@ -51,4 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.menu_principal,menu);
+        return true;
+    }
 }

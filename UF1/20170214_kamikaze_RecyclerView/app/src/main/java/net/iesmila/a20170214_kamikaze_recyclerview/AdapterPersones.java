@@ -50,6 +50,8 @@ public class AdapterPersones extends
         holder.mEdtNom.setText(p.getNom());
         holder.mImvAvatar.setImageResource(p.getFaceResource());
         holder.mRtbRating.setRating(p.getRating());
+        holder.mPersona = p;
+
          /*holder.itemView.setBackgroundColor(
                 mPosicioSeleccionada==posicioActual?Color.RED:Color.TRANSPARENT
         );*/
@@ -120,6 +122,8 @@ public class AdapterPersones extends
         private RatingBar mRtbRating;
         private ImageView mImvDelete;
         private Persona mP;
+        private Persona mPersona;
+
         public ViewHolder(View fila) {
             super(fila);
             mImvAvatar = (ImageView) fila.findViewById(R.id.imvAvatar);
