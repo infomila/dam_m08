@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //glm.setOrientation(GridLayoutManager.HORIZONTAL);
         mRcyPersones.setLayoutManager(llm);
 
-        mAdapterPersones = new AdapterPersones(persones);
+        mAdapterPersones = new AdapterPersones(persones, this);
         mRcyPersones.setAdapter(mAdapterPersones);
 
         //---------- Per augmentar el rendiment -----------
@@ -56,11 +56,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    private Menu mMenu;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         MenuInflater inflater = new MenuInflater(this);
         inflater.inflate(R.menu.menu_principal,menu);
+
+        notificaItemSeleccionatCanviat(-1);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.mnuEsborrar: {
+                mAdapterPersones.esborrarElementSeleccionat();
+                return true;
+            }
+            case R.id.mnuUp: {
+                mAdapterPersones.moureElementSeleccionat(-1);
+            } break;
+            case R.id.mnuDown: {
+                mAdapterPersones.moureElementSeleccionat(+1);
+            } break;
+        }
+        return false;
+    }
+
+    public void notificaItemSeleccionatCanviat(int posicioSeleccionada){
+        boolean mostraOpcioMenuDelete = (posicioSeleccionada!=-1);
+
+        MenuItem mnuEsborrar = mMenu.findItem(R.id.mnuEsborrar);
+        mnuEsborrar.setVisible(mostraOpcioMenuDelete);
+
+    }
+
 }

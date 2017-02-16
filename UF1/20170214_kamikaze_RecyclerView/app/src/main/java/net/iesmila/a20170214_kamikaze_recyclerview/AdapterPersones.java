@@ -26,10 +26,12 @@ public class AdapterPersones extends
     private int mPosicioSeleccionada = -1;
     private View mViewPosicioSeleccionada = null;
     private ArrayList<Persona> mPersones;
+    private MainActivity mActivity;
 
-
-    public AdapterPersones(ArrayList<Persona> persones) {
+    public AdapterPersones(ArrayList<Persona> persones, MainActivity activity)
+    {
         mPersones = persones;
+        mActivity= activity;
     }
 
     @Override
@@ -89,6 +91,8 @@ public class AdapterPersones extends
                     mPosicioSeleccionada = -1;
                 }
                 notifyItemChanged(posicioActual);
+                mActivity.notificaItemSeleccionatCanviat(mPosicioSeleccionada);
+
             }
         });
 
@@ -105,11 +109,34 @@ public class AdapterPersones extends
         return mPersones.size();
     }
 
-    public void removeCurrent() {
-        if(mPosicioSeleccionada==-1) return;
-        mPersones.remove(mPosicioSeleccionada);
-        notifyItemRemoved(mPosicioSeleccionada);
-        mPosicioSeleccionada = -1;
+    public void esborrarElementSeleccionat() {
+
+        if(mPosicioSeleccionada!=-1) {
+            mPersones.remove(mPosicioSeleccionada);
+            notifyItemRemoved(mPosicioSeleccionada);
+            mPosicioSeleccionada = -1;
+        }
+
+    }
+
+    public void moureElementSeleccionat(int offset) {
+        if(mPosicioSeleccionada!=-1) {
+
+            int novaPosicio = mPosicioSeleccionada + offset;
+            if(!(novaPosicio<0 || novaPosicio>=mPersones.size())) {
+
+                Persona tmp = mPersones.get(novaPosicio);
+                mPersones.set(novaPosicio,mPersones.get(mPosicioSeleccionada) );
+                mPersones.set(mPosicioSeleccionada,tmp);
+                int posicioSeleccionadaCopia = mPosicioSeleccionada;
+                mPosicioSeleccionada = novaPosicio;
+
+                notifyItemMoved(posicioSeleccionadaCopia, novaPosicio);
+
+
+            }
+
+        }
     }
 
 

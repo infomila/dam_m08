@@ -6,4 +6,12 @@
         android:icon="@android:drawable/ic_delete"
         android:title="Esborrar"
         app:showAsAction="always"/>
+    <item android:id="@+id/mnuUp"
+        android:icon="@android:drawable/arrow_up_float"
+        android:title="Up"
+        app:showAsAction="always"/>
+    <item android:id="@+id/mnuDown"
+        android:icon="@android:drawable/arrow_down_float"
+        android:title="Down"
+        app:showAsAction="always"/>
 </menu>
