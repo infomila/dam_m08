@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rcyPersones"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context="net.iesmila.a20170214_kamikaze_recyclerview.MainActivity">
 
-</android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.Toolbar
+    android:id="@+id/tlbMenu"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcyPersones"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">20170214_kamikaze_RecyclerView</string>
+    <string name="delete">Delete</string>
 </resources>
