@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
-        MenuInflater inflater = new MenuInflater(this);
-        inflater.inflate(R.menu.menu_principal,menu);
+        //MenuInflater inflater = new MenuInflater(this);
+        getMenuInflater().inflate(R.menu.menu_principal,menu);
 
         notificaItemSeleccionatCanviat(-1);
         return true;
