@@ -1,7 +1,8 @@
 package net.iesmila.a20170214_kamikaze_recyclerview;
 
-import android.graphics.Color;
-import android.media.Image;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +16,6 @@ import net.iesmila.a20170214_kamikaze_recyclerview.model.Persona;
 
 import java.util.ArrayList;
 
-import static android.graphics.Color.*;
-
 /**
  * Created by BERNAT on 14/02/2017.
  */
@@ -27,6 +26,8 @@ public class AdapterPersones extends
     private View mViewPosicioSeleccionada = null;
     private ArrayList<Persona> mPersones;
     private MainActivity mActivity;
+    private Persona mPersonaPendentCanviarImatge;
+    private int mPosicioPersonaPendentCanviarImatge;
 
     public AdapterPersones(ArrayList<Persona> persones, MainActivity activity)
     {
@@ -46,11 +47,11 @@ public class AdapterPersones extends
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int posicioActual) {
-        Persona p = mPersones.get(posicioActual);
+    public void onBindViewHolder(final ViewHolder holder, final int posicioActual) {
+        final Persona p = mPersones.get(posicioActual);
 
         holder.mEdtNom.setText(p.getNom());
-        holder.mImvAvatar.setImageResource(p.getFaceResource());
+        holder.mImvAvatar.setImageDrawable(p.getFaceDrawable());
         holder.mRtbRating.setRating(p.getRating());
         holder.mPersona = p;
 
@@ -96,6 +97,35 @@ public class AdapterPersones extends
             }
         });
 
+        //--------------- Listener de l'Image View per canviar
+        //--------------- la foto.
+        holder.mImvAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                mPersonaPendentCanviarImatge = p;
+                mPosicioPersonaPendentCanviarImatge = posicioActual;
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                boolean handlerExists =
+                        (intent.resolveActivity(mActivity.getPackageManager())!= null);
+                if(handlerExists) {
+                    mActivity.startActivityForResult(Intent.createChooser(intent,
+                            "Select Picture"), MainActivity.PICK_IMAGE);
+                }
+            }
+        });
+
+    }
+
+    public void posarImatgePendent( Bitmap pBitmap) {
+        if(mPersonaPendentCanviarImatge!=null) {
+            mPersonaPendentCanviarImatge.setFaceDrawable(
+                    new BitmapDrawable(pBitmap));
+            notifyItemChanged(mPosicioPersonaPendentCanviarImatge);
+        }
     }
 
     public Persona getPersonaSeleccionada() {

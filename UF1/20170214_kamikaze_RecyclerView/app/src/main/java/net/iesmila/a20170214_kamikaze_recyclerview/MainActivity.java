@@ -1,5 +1,9 @@
 package net.iesmila.a20170214_kamikaze_recyclerview;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,10 +17,13 @@ import android.view.MenuItem;
 
 import net.iesmila.a20170214_kamikaze_recyclerview.model.Persona;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int PICK_IMAGE = 3;
     private RecyclerView mRcyPersones;
     private AdapterPersones mAdapterPersones;
 
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRcyPersones = (RecyclerView) findViewById(R.id.rcyPersones);
 
-        ArrayList<Persona> persones = Persona.getLlistaPersones();
+        ArrayList<Persona> persones = Persona.getLlistaPersones(this);
 
         //----------- Posem el layout que volem fer servir ---------------
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -91,5 +98,33 @@ public class MainActivity extends AppCompatActivity {
         mnuEsborrar.setVisible(mostraOpcioMenuDelete);
 
     }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PICK_IMAGE) {
+                if (data == null) {
+                    //Display an error
+                    return;
+                }
+                try {
+                    InputStream inputStream = this.getContentResolver().
+                                                openInputStream(data.getData());
+
+                    BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
+                    Bitmap bmp = BitmapFactory.decodeStream(inputStream,
+                            null, decodeOptions);
+
+                    mAdapterPersones.posarImatgePendent(bmp);
+
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                //Now you c
+            }
+        }
+    }
+
 
 }
