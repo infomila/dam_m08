@@ -98,6 +98,15 @@ public class AdapterPersones extends
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holderC.mSpnDepartament.setAdapter(dataAdapter);
 
+            IlCapo capo = (IlCapo) p;
+            Departament d = capo.getDepartament();
+            if(d!=null) { // valida que el departament no sigui null
+                int idx = Departament.getDepartaments().indexOf(d);
+                // només si trobem el departament, el seleccionem
+                if (idx >= 0) {
+                    holderC.mSpnDepartament.setSelection(idx);
+                }
+            }
 
         }
 
