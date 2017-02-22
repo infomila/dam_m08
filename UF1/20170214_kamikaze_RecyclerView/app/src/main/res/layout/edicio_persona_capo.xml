@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_fila">
+    <ImageView
+        android:id="@+id/imvAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@android:drawable/btn_plus"/>
+    <EditText
+        android:id="@+id/edtNom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paco"/>
+
+
+    <Spinner
+        android:id="@+id/spnDepartament"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Spinner>
+
+</LinearLayout>

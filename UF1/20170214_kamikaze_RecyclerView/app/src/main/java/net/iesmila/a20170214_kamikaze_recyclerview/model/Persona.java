@@ -30,12 +30,14 @@ public class Persona implements Serializable {
         if(_llistaPersones==null) {
             _llistaPersones = new ArrayList<Persona>();
             _llistaPersones.add(new Persona("Paco", 4, r.getDrawable(R.drawable.paco)));
+            _llistaPersones.add(new IlCapo("Vitto Corleone",  r.getDrawable(R.drawable.pere), Departament.getDepartaments().get(2)));
             _llistaPersones.add(new Persona("Paula", 2, r.getDrawable(R.drawable.paula)));
             _llistaPersones.add(new Persona("Pere", 1,  r.getDrawable(R.drawable.pere)));
             _llistaPersones.add(new Persona("John", 1,  r.getDrawable(R.drawable.john)));
             _llistaPersones.add(new Persona("Paco", 4,  r.getDrawable(R.drawable.paco)));
             _llistaPersones.add(new Persona("Paula", 2, r.getDrawable(R.drawable.paula)));
             _llistaPersones.add(new Persona("Pere", 1,  r.getDrawable(R.drawable.pere)));
+            _llistaPersones.add(new IlCapo("Isidre",  r.getDrawable(R.drawable.pere), Departament.getDepartaments().get(0)));
             _llistaPersones.add(new Persona("John", 1,  r.getDrawable(R.drawable.john)));
         }
         return _llistaPersones;

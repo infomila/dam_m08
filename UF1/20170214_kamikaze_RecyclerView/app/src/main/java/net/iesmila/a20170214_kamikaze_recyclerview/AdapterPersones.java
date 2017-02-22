@@ -8,10 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 
+import net.iesmila.a20170214_kamikaze_recyclerview.model.Departament;
+import net.iesmila.a20170214_kamikaze_recyclerview.model.IlCapo;
 import net.iesmila.a20170214_kamikaze_recyclerview.model.Persona;
 
 import java.util.ArrayList;
@@ -38,12 +42,21 @@ public class AdapterPersones extends
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        int layout;
+        if(viewType==TIPUS_NORMAL) {
+            layout = R.layout.edicio_persona;
+        }else {
+            layout = R.layout.edicio_persona_capo;
+        }
         View fila = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.edicio_persona,
+                layout,
                 parent,
                 false);
-        ViewHolder vh = new ViewHolder(fila);
-        return vh;
+        if(viewType==TIPUS_NORMAL) {
+            return new ViewHolderNormal(fila);
+        } else {
+            return new ViewHolderCapo(fila);
+        }
     }
 
     @Override
@@ -52,30 +65,41 @@ public class AdapterPersones extends
 
         holder.mEdtNom.setText(p.getNom());
         holder.mImvAvatar.setImageDrawable(p.getFaceDrawable());
-        holder.mRtbRating.setRating(p.getRating());
-        holder.mPersona = p;
-
-         /*holder.itemView.setBackgroundColor(
-                mPosicioSeleccionada==posicioActual?Color.RED:Color.TRANSPARENT
-        );*/
         holder.itemView.setSelected(mPosicioSeleccionada==posicioActual);
 
-        //holder.mImvDelete.setVisibility(mModeEsborrat?View.VISIBLE:View.INVISIBLE);
+        if(getItemViewType(posicioActual)==TIPUS_NORMAL ) {//tipus persona normal )
 
-        holder.mImvDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            ViewHolderNormal holderN = (ViewHolderNormal) holder;
+            holderN.mRtbRating.setRating(p.getRating());
+            holderN.mImvDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                int posicioActualDeVeritat = holder.getAdapterPosition();
-                Log.d("XXXX", "Pos:"+posicioActualDeVeritat);
-                mPersones.remove(posicioActualDeVeritat);
-                notifyItemRemoved(posicioActualDeVeritat);
+                    int posicioActualDeVeritat = holder.getAdapterPosition();
+                    Log.d("XXXX", "Pos:" + posicioActualDeVeritat);
+                    mPersones.remove(posicioActualDeVeritat);
+                    notifyItemRemoved(posicioActualDeVeritat);
 //                notifyItemRangeChanged(posicioActual,getItemCount());
-                 if(mPosicioSeleccionada == posicioActualDeVeritat) {
-                    mPosicioSeleccionada = -1;
+                    if (mPosicioSeleccionada == posicioActualDeVeritat) {
+                        mPosicioSeleccionada = -1;
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            // Tipus CAPO
+            ViewHolderCapo holderC = (ViewHolderCapo) holder;
+
+
+            ArrayAdapter<Departament> dataAdapter =
+                    new ArrayAdapter<Departament>(mActivity,
+                            android.R.layout.simple_spinner_item,
+                            Departament.getDepartaments());
+
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            holderC.mSpnDepartament.setAdapter(dataAdapter);
+
+
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,24 +197,57 @@ public class AdapterPersones extends
     //------------------------------------------------
     //                 VIEW HOLDER Begins
     //------------------------------------------------
+
+
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView mImvAvatar;
         private EditText mEdtNom;
-        private RatingBar mRtbRating;
-        private ImageView mImvDelete;
-        private Persona mP;
-        private Persona mPersona;
+
+  //      private Persona mP;
+//        private Persona mPersona;
 
         public ViewHolder(View fila) {
             super(fila);
             mImvAvatar = (ImageView) fila.findViewById(R.id.imvAvatar);
             mEdtNom =    (EditText)  fila.findViewById(R.id.edtNom);
+        }
+    }
+
+    public static class ViewHolderNormal extends ViewHolder{
+        private RatingBar mRtbRating;
+        private ImageView mImvDelete;
+        public ViewHolderNormal(View fila) {
+            super(fila);
             mRtbRating = (RatingBar) fila.findViewById(R.id.rtbRating);
             mImvDelete = (ImageView) fila.findViewById(R.id.imvDelete);
         }
     }
+
+    public static class ViewHolderCapo extends ViewHolder{
+        private Spinner mSpnDepartament;
+        public ViewHolderCapo(View fila) {
+            super(fila);
+            mSpnDepartament = (Spinner) fila.findViewById(R.id.spnDepartament);
+         }
+    }
+
+
+
     //------------------------------------------------
     //                 VIEW HOLDER Ends
     //------------------------------------------------
 
+    private static final int TIPUS_NORMAL   = 0;
+    private static final int TIPUS_CAPO     = 1;
+
+    @Override
+    public int getItemViewType(int position) {
+        if(mPersones.get(position) instanceof IlCapo){
+            return TIPUS_CAPO;
+        } else {
+            return TIPUS_NORMAL;
+        }
+    }
 }

@@ -39,4 +39,9 @@ public class Departament {
     public void setNom(String pNom) {
         this.mNom = pNom;
     }
+
+    @Override
+    public String toString() {
+        return getNom();
+    }
 }
