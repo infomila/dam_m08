@@ -70,6 +70,14 @@ public class AdapterPersones extends
         if(getItemViewType(posicioActual)==TIPUS_NORMAL ) {//tipus persona normal )
 
             ViewHolderNormal holderN = (ViewHolderNormal) holder;
+
+            holderN.mImvEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.obrirActivityEdicio(p);
+                }
+            });
+
             holderN.mRtbRating.setRating(p.getRating());
             holderN.mImvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -227,10 +235,12 @@ public class AdapterPersones extends
     public static class ViewHolderNormal extends ViewHolder{
         private RatingBar mRtbRating;
         private ImageView mImvDelete;
+        private ImageView mImvEdit;
         public ViewHolderNormal(View fila) {
             super(fila);
             mRtbRating = (RatingBar) fila.findViewById(R.id.rtbRating);
             mImvDelete = (ImageView) fila.findViewById(R.id.imvDelete);
+            mImvEdit =   (ImageView) fila.findViewById(R.id.imvEdit);
         }
     }
 

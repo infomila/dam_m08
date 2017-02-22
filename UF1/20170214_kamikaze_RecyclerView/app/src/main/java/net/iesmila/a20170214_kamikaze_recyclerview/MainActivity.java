@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final int PICK_IMAGE = 3;
+    private static final int ACTIVITY_EDICIO = 4;
     private RecyclerView mRcyPersones;
     private AdapterPersones mAdapterPersones;
 
@@ -99,8 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==ACTIVITY_EDICIO) {
+            // recollir resultats de l'activity d'edició
+
+        }
         if (resultCode == RESULT_OK) {
             if (requestCode == PICK_IMAGE) {
                 if (data == null) {
@@ -124,6 +129,16 @@ public class MainActivity extends AppCompatActivity {
                 //Now you c
             }
         }
+    }
+
+
+    public void obrirActivityEdicio(Persona p) {
+        Intent intent = new Intent(this, EditPersonaActivity.class);
+
+
+        intent.putExtra(EditPersonaActivity.PARAM_IDX_PERSONA, Persona.getLlistaPersones(this).indexOf(p));
+        //startActivity(intent);
+        startActivityForResult(intent,ACTIVITY_EDICIO);
     }
 
 
