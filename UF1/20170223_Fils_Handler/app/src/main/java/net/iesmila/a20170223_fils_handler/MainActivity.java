@@ -12,12 +12,15 @@ import android.widget.TextView;
 import net.iesmila.a20170223_fils_handler.model.Player;
 import net.iesmila.a20170223_fils_handler.utils.Downloader;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 SAXBuilder builder = new SAXBuilder();
-                builder.set
-                Document document = null;
+                 Document document = null;
                 try {
-                    document = (Document) builder.build(mHtml);
+                    InputStream stream = new ByteArrayInputStream(mHtml.getBytes("UTF-8"));
+                    document = (Document) builder.build(stream);
                     Element rootNode = document.getRootElement();
                     List<Element> list = rootNode.getChildren("tPlayerNames");
                     String resum="";
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                             e.getChildText("sCountryName"),
                             e.getChildText("sCountryFlag")
                         );
-                        resum += p.toString() +"\\n";
+                        resum += p.toString() +"\n\n";
 
 
                     }
