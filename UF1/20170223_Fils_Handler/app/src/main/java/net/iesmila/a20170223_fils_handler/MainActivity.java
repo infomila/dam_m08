@@ -4,9 +4,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.iesmila.a20170223_fils_handler.model.Player;
@@ -21,13 +24,16 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtnDownload;
-    private TextView mTxvText;
     private String mHtml;
+    private ProgressBar mPrgProgres;
+    private RecyclerView mRcyLlistaJugadors;
+
     private static final String DOWNLOAD_SUCCESSFUL ="DOWNLOAD_SUCCESSFUL";
     Handler mHander = new Handler() {
         @Override
@@ -46,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     Element rootNode = document.getRootElement();
                     List<Element> list = rootNode.getChildren("tPlayerNames");
                     String resum="";
+                    ArrayList<Player> players = new ArrayList<Player>();
                     for(Element e:list) {
                         Player p = new Player(
                             Integer.valueOf(e.getChildText("iId")),
@@ -53,24 +60,23 @@ public class MainActivity extends AppCompatActivity {
                             e.getChildText("sCountryName"),
                             e.getChildText("sCountryFlag")
                         );
+                        players.add(p);
                         resum += p.toString() +"\n\n";
-
-
                     }
-                    mTxvText.setText(resum);
+                    PlayerAdapter adapter = new PlayerAdapter(players, MainActivity.this);
+                    mRcyLlistaJugadors.setAdapter(adapter);
 
                 } catch (JDOMException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-
-
             } else {
-                mTxvText.setText("Error de descarrega");
+
             }
+            mBtnDownload.setEnabled(true);
+            mPrgProgres.setVisibility(View.INVISIBLE);
+
         }
     };
 
@@ -83,11 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
         //------------------------------------
         mBtnDownload = (Button)findViewById(R.id.btnDownload);
-        mTxvText = (TextView) findViewById(R.id.txvText);
+        mPrgProgres = (ProgressBar) findViewById(R.id.prgProgres);
+        mRcyLlistaJugadors = (RecyclerView) findViewById(R.id.rcyLlistaJugadors);
+        configuraRecyclerView(mRcyLlistaJugadors);
         //-------------------------------------
         mBtnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 Thread t = new Thread(new Runnable() {
                     @Override
@@ -100,11 +109,23 @@ public class MainActivity extends AppCompatActivity {
                         mHander.sendMessage(m);
                     }
                 });
+
+                mBtnDownload.setEnabled(false);
+                mPrgProgres.setVisibility(View.VISIBLE);
                 t.start();
 
             }
         });
 
+
+    }
+
+    private void configuraRecyclerView(RecyclerView mRcyLlistaJugadors) {
+
+        mRcyLlistaJugadors.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        mRcyLlistaJugadors.setLayoutManager(llm);
 
     }
 }
