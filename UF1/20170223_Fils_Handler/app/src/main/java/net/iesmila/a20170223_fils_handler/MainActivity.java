@@ -1,5 +1,5 @@
 package net.iesmila.a20170223_fils_handler;
-
+//import com.nostra13.universalimageloader.core.*;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import net.iesmila.a20170223_fils_handler.model.Player;
 import net.iesmila.a20170223_fils_handler.utils.Downloader;
@@ -86,7 +89,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //------------------------------------
+        // Configuració del ImageLoader      //
+       ImageLoaderConfiguration config =
+               new ImageLoaderConfiguration.Builder(this).
+                       //diskCacheFileCount(3).
+                       //memoryCacheSize(10).
+                       build();
+        ImageLoader.getInstance().init(config);
         //------------------------------------
         mBtnDownload = (Button)findViewById(R.id.btnDownload);
         mPrgProgres = (ProgressBar) findViewById(R.id.prgProgres);

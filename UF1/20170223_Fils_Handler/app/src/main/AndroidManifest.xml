@@ -3,6 +3,7 @@
     package="net.iesmila.a20170223_fils_handler">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
