@@ -62,8 +62,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
             holder.mImvBandera.setImageBitmap(p.getFlagBitmap());
         } else {
             holder.mImvBandera.setImageBitmap(null);
+            int h = holder.mImvBandera.getDrawable().getIntrinsicHeight();
+            int w = holder.mImvBandera.getDrawable().getIntrinsicWidth();
+
             imageLoader.displayImage(p.getFlag(),
-                    new NonViewAware(new ImageSize(80, 60), ViewScaleType.FIT_INSIDE),
+                    new NonViewAware(new ImageSize(w, h), ViewScaleType.FIT_INSIDE),
                     new SimpleImageLoadingListener() {
             //imageLoader.loadImage(p.getFlag(), new SimpleImageLoadingListener() {
                 @Override
