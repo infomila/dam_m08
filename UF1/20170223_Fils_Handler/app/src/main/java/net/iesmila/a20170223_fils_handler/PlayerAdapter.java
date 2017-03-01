@@ -1,11 +1,18 @@
 package net.iesmila.a20170223_fils_handler;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.assist.ViewScaleType;
+import com.nostra13.universalimageloader.core.imageaware.NonViewAware;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.iesmila.a20170223_fils_handler.model.Player;
 
@@ -40,12 +47,35 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        Player p = mPlayers.get(position);
+        final Player p = mPlayers.get(position);
 
         holder.mTxvJugador.setText(p.getName());
         holder.mTxvPais.setText(p.getCountry());
+
+        //----------- Encarreguem al ImageLoader la feina de descarregar la imatge   ---------------------------
+        // Get singleton instance
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        // Load image, decode it to Bitmap and return Bitmap to callback
+        if(p.getFlagBitmap()!=null) {
+            holder.mImvBandera.setImageBitmap(p.getFlagBitmap());
+        } else {
+            holder.mImvBandera.setImageBitmap(null);
+            imageLoader.displayImage(p.getFlag(),
+                    new NonViewAware(new ImageSize(80, 60), ViewScaleType.FIT_INSIDE),
+                    new SimpleImageLoadingListener() {
+            //imageLoader.loadImage(p.getFlag(), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view,
+                                              Bitmap loadedImage) {
+                    p.setFlagBitmap(loadedImage);
+                    notifyItemChanged(position);
+                }
+            });
+        }
+
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

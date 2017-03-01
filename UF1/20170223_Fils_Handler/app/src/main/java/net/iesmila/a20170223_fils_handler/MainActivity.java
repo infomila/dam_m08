@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                             Integer.valueOf(e.getChildText("iId")),
                             e.getChildText("sName"),
                             e.getChildText("sCountryName"),
-                            e.getChildText("sCountryFlag")
+                            e.getChildText("sCountryFlagLarge")
                         );
                         players.add(p);
                         resum += p.toString() +"\n\n";

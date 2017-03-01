@@ -1,5 +1,7 @@
 package net.iesmila.a20170223_fils_handler.model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by BERNAT on 23/02/2017.
  */
@@ -9,6 +11,7 @@ public class Player {
     private String mName;
     private String mCountry;
     private String mFlag;
+    private Bitmap mFlagBitmap;
 
     public Player(int mId, String mName, String mCountry, String mFlag) {
         this.mId = mId;
@@ -41,6 +44,14 @@ public class Player {
                 ", mCountry='" + mCountry + '\'' +
                 ", mFlag='" + mFlag + '\'' +
                 '}';
+    }
+
+    public Bitmap getFlagBitmap() {
+        return mFlagBitmap;
+    }
+
+    public void setFlagBitmap(Bitmap flagBitmap) {
+        this.mFlagBitmap = flagBitmap;
     }
 }
 
