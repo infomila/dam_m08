@@ -14,7 +14,8 @@ import java.util.List;
  * Created by BERNAT on 09/03/2017.
  */
 
-public class DownloadAsyncTask extends AsyncTask<String,Void, List<Player> > {
+public class DownloadAsyncTask extends
+        AsyncTask<String,Void, List<Player> > {
 
     private IDownloadCompleteListener mListener;
 
@@ -32,8 +33,8 @@ public class DownloadAsyncTask extends AsyncTask<String,Void, List<Player> > {
         Log.d("XXXXXX","<DOWNLOADED>\n" + downloadedText);
         if(downloadedText==null) return null;
 
-        //List<Player> players = PlayerParser.parseFromJSON(downloadedText);
-        List<Player> players = PlayerParser.parseFromXML(downloadedText);
+        List<Player> players = PlayerParser.parseFromJSON(downloadedText);
+        //List<Player> players = PlayerParser.parseFromXML(downloadedText);
 
         return players;
     }

@@ -56,8 +56,41 @@ public class PlayerParser {
         }
         return null;
     }
-
+/*
+[
+   {
+      "iId":469,
+      "sName":"Aaron Hughes",
+      "sCountryName":"Northern Ireland",
+      "sCountryFlag":"http://footballpool.dataaccess.eu/images/flags/nir.gif",
+      "sCountryFlagLarge":"http://footballpool.dataaccess.eu/images/flags/nir.png"
+   },
+   {
+      "iId":993,
+      "sName":"Aaron Ramsey",
+      "sCountryName":"Wales",
+      "sCountryFlag":"http://footballpool.dataaccess.eu/images/flags/wal.gif",
+      "sCountryFlagLarge":"http://footballpool.dataaccess.eu/images/flags/wal.png"
+   }
+ */
     public static List<Player> parseFromJSON(String JSON) {
-      return null;
+        try {
+            List<Player> players = new ArrayList<Player>();
+            JSONArray llistaJugadors = new JSONArray(JSON);
+            for(int i=0;i<llistaJugadors.length();i++){
+                JSONObject jugadorJ = llistaJugadors.getJSONObject(i);
+                Player p = new Player(
+                        jugadorJ.getInt("iId"),
+                        jugadorJ.getString("sName"),
+                        jugadorJ.getString("sCountryName"),
+                        jugadorJ.getString("sCountryFlagLarge")
+                );
+                players.add(p);
+            }
+            return players;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
