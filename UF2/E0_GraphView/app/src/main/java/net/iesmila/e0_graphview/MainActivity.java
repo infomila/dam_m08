@@ -13,10 +13,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RelativeLayout rlyMain  = (RelativeLayout) findViewById(R.id.activity_main);
-        Pissarra p = new Pissarra(this);
+        final Pissarra p = new Pissarra(this);
         rlyMain.addView(p,
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            p.invalidate();
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
+
 
     }
 }
