@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         rlyMain.addView(p,
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
-
+/*
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         t.start();
-
+*/
 
     }
 }
