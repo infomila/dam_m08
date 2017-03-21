@@ -29,7 +29,6 @@ public class FilPaint extends Thread {
                 }
             }finally {
                 if(c!=null) mHolder.unlockCanvasAndPost(c);
-                filEnExecucio = false;
             }
         }
     }
