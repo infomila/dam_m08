@@ -11,6 +11,7 @@
     tools:context="net.iesmila.e1_paint.MainActivity">
 
     <net.iesmila.e1_paint.PaintSurface
+        android:id="@+id/psfPaint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
           />

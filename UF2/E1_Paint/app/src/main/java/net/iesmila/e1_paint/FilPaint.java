@@ -25,9 +25,13 @@ public class FilPaint extends Thread {
             try {
                 c = mHolder.lockCanvas();
                 synchronized (mHolder) {
-                    mPaintSurface.onDraw(c);
+                    mPaintSurface.onElMeuDraw(c);
                 }
-            }finally {
+                //Thread.sleep(100);
+            } catch (Exception e) {
+                e.printStackTrace();
+                filEnExecucio = false;
+            } finally {
                 if(c!=null) mHolder.unlockCanvasAndPost(c);
             }
         }
