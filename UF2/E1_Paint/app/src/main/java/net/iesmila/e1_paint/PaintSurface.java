@@ -19,6 +19,19 @@ import android.view.ViewTreeObserver;
 public class PaintSurface extends SurfaceView
         implements SurfaceHolder.Callback {
 
+
+    private enum Mode {
+        DIBUIXAR,
+        ESBORRAR
+    };
+
+    private Mode mModeActual = Mode.DIBUIXAR;
+
+    private int mBackgroundColor = Color.BLACK;
+    private int mForegroundColor = Color.RED;
+
+    public static final int RADIUS = 60;
+    private static final long MAX_DURACIO = 500;
     private Bitmap mBuffer;
     private Canvas mCanvasOffscreen;
 
@@ -30,8 +43,13 @@ public class PaintSurface extends SurfaceView
         super(context, attrs);
         // Crea un paint
         p = new Paint();
-        p.setColor(Color.RED);
+        p.setColor(mForegroundColor);
         p.setStyle(Paint.Style.FILL);
+
+        pL = new Paint();
+        pL.setColor(p.getColor());
+        pL.setStyle(Paint.Style.STROKE);
+        pL.setStrokeWidth(RADIUS*2);
         // registra el holder callback
         getHolder().addCallback(this);
 
@@ -54,8 +72,9 @@ public class PaintSurface extends SurfaceView
     }
 
 
-    private float x = 40, y = 40;
-    private Paint p;
+    private float x=0, y=0; // Isidre approved !
+    private float xAnt=0, yAnt=0;
+    private Paint p, pL;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -65,16 +84,54 @@ public class PaintSurface extends SurfaceView
 
     }
 
+    private int comptadorClicsSeguits = 0;
+    private long primerClickTime = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //return super.onTouchEvent(event);
-        if(event.getAction()==MotionEvent.ACTION_DOWN ||
-                event.getAction()==MotionEvent.ACTION_MOVE) {
-            x = event.getX();
-            y = event.getY();
-            mCanvasOffscreen.drawCircle(x,y,60, p);
+        x = event.getX();
+        y = event.getY();
+ 
+        //p.setFontFeatureSettings("font-size:20px;color:#00ff00;font-weight:bold;");
+        //mCanvasOffscreen.drawText("A",x,y,p);
+        mCanvasOffscreen.drawCircle(x,y, RADIUS, p);
+
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN: {
+                if(comptadorClicsSeguits==0) {
+                    primerClickTime = System.currentTimeMillis();
+                }
+                comptadorClicsSeguits++;
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                if(comptadorClicsSeguits==2) {
+                    if(  System.currentTimeMillis() - primerClickTime < MAX_DURACIO ){
+                        canviaMode();
+                    }
+                    comptadorClicsSeguits = 0;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                mCanvasOffscreen.drawLine(xAnt,yAnt,x,y,pL);
+                break;
+            }
         }
+        xAnt = x;
+        yAnt = y;
         return true;
+    }
+
+    private void canviaMode() {
+        switch (mModeActual) {
+            case DIBUIXAR: mModeActual = Mode.ESBORRAR;break;
+            case ESBORRAR: mModeActual = Mode.DIBUIXAR;break;
+        }
+        int color = mModeActual==Mode.ESBORRAR ? mBackgroundColor:mForegroundColor;
+        p.setColor(color);
+        pL.setColor(color);
     }
 
     private FilPaint mFilPaint;
