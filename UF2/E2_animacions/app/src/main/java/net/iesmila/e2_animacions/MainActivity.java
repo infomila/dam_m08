@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+		// Animació tipus "Sprite" , definint els fotogrames a un drawable.
         final ImageView imvKong = (ImageView) findViewById(R.id.imvKong);
         ((AnimationDrawable)imvKong.getDrawable()).start();
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
                 imvOil.setX((relActivity_main.getWidth()-imvOil.getWidth())/2);
 
+				// Podem donar escala, posició, rotació i transparència de forma directa
                 //imvKong.setScaleX(4);
                 //imvKong.setScaleY(4);
                 //imvKong.setRotation(90);
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 f02.setStartDelay(2000);
 
 
+				// Combinem les animacions i les reproduïm ab un AnimatorSet
                 AnimatorSet as = new AnimatorSet();
                 //as.play(f01).before(f02);
                 as.playSequentially(f01,f02);

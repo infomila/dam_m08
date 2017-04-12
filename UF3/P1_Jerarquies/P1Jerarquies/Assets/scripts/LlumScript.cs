@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class LlumScript : MonoBehaviour {
 
@@ -11,33 +12,67 @@ public class LlumScript : MonoBehaviour {
 
 
     public GameObject Llum;
+    public GameObject rotulaBase;
 
+    private bool mHeXocat = false;
+    public float VELOCITAT_SALT = 0.01f;
+    private float vel=0;
+    private float g = 0;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    // Use this for initialization
+    void Start () {
+        rotulaBase = this.transform.Find("S1").gameObject;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
         if(Input.GetButton("Jump"))
         {
-            this.transform.RotateAround(transform.position, Vector3.up, VelocitatGir);
-           // this.transform.Rotate(new Vector3(0, VelocitatGir, 0));
-
+            vel = VELOCITAT_SALT;
+            // this.transform.Rotate(new Vector3(0, VelocitatGir, 0));
+            g = -1f;
         }
-        // h és +1 si anem a la dreta, i -1 si anem a l'esquerra.
+
+        this.transform.position += new Vector3(0, vel*Time.deltaTime, 0);
+        vel += g;
+
         float h = Input.GetAxis("Horizontal");
-        if (h!=0) {
+        this.transform.RotateAround(transform.position, Vector3.up, h*VelocitatGir);
 
-            Debug.Log(this.transform.localRotation.eulerAngles.z);
-            if ((this.transform.localRotation.eulerAngles.z > 20 && h < 0) ||
-                (this.transform.localRotation.eulerAngles.z < 20  ))
-            {
 
-                this.transform.Rotate(new Vector3(0, 0, h * VelocitatGir));
+        // h és +1 si anem a la dreta, i -1 si anem a l'esquerra.
+        bool baixa = Input.GetKey(KeyCode.F);
+        bool puja = Input.GetKey(KeyCode.G);
+        int girBras = 0;
+        if (baixa) girBras = +1;
+        else if(puja) girBras = -1;
+
+        if (girBras != 0) {
+            float variacioAngle = girBras * VelocitatGir;
+
+            if (girBras < 0 || girBras > 0 && !mHeXocat) {
+                rotulaBase.transform.Rotate(new Vector3(0, 0, variacioAngle));
             }
+            if(girBras < 0)
+            {
+                mHeXocat = false;
+            }
+            /*
+             * 
+             * Versió amb limitació angular
+            
+
+            float angleZ = this.transform.localRotation.eulerAngles.z;
+            Debug.Log(angleZ);
+            if (angleZ > 180) angleZ = angleZ - 360;
+
+            if (angleZ + variacioAngle > -20 && angleZ + variacioAngle < 20)
+            {
+                this.transform.Rotate(new Vector3(0, 0, variacioAngle));
+                    
+            }*/
+           // Debug.Log(angleZ);           
 
         }
 
@@ -69,5 +104,10 @@ public class LlumScript : MonoBehaviour {
         //
         // Debug.Log("HOLA MON");
 
+    }
+    
+    internal void setXoc(bool v)
+    {
+        mHeXocat = v;
     }
 }
